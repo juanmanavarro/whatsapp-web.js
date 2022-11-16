@@ -115,6 +115,12 @@ class Client extends EventEmitter {
             referer: 'https://whatsapp.com/'
         });
 
+        const sel = await page.$('[title="Update Google Chrome"]');
+        if ( sel ) {
+            this.emit(Events.CHROME_OUTDATED);
+            return;
+        }
+
         await page.evaluate(`function getElementByXpath(path) {
             return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
           }`);
